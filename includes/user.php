@@ -26,6 +26,7 @@ class user
                 $result->bindParam(':username', $this->username);
                 $result->bindParam(':password', $this->password);
                 $result->execute();
+                $db->write_file(json_encode("register succeeded"));
             }
             else
             {

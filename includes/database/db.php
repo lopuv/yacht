@@ -48,7 +48,7 @@ class db
                 $result = $this->conn->prepare($sql);
                 $result->execute();
                 $json = json_encode($result->fetch(PDO::FETCH_ASSOC));
-                file_put_contents("data.json", $json);
+                $this->write_file($json);
             } catch (PDOException $error) {
                 echo json_encode($error->getMessage());
             }
@@ -58,7 +58,7 @@ class db
                 $result = $this->conn->prepare($sql);
                 $result->execute();
                 $json = json_encode($result->fetch(PDO::FETCH_ASSOC));
-                file_put_contents("data.json", $json);
+                $this->write_file($json);
             } catch (PDOException $error) {
                 echo json_encode($error->getMessage());
             }
@@ -68,11 +68,16 @@ class db
                 $result = $this->conn->prepare($sql);
                 $result->execute();
                 $json = json_encode($result->fetch(PDO::FETCH_ASSOC));
-                file_put_contents("data.json", $json);
+                $this->write_file($json);
             } catch (PDOException $error) {
                 echo json_encode($error->getMessage());
             }
         }
+    }
+
+    public function write_file($json)
+    {
+        file_put_contents("data.json", $json);
     }
 
     public function get_json()
