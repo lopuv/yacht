@@ -3,4 +3,6 @@
 include_once "includes/init.php";
 
 $db = new db();
-$db->read("user");
+
+$db->get_json();
+$db->register();
