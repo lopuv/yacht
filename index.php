@@ -10,4 +10,4 @@ $user = new user();
 
 $user->json = $db->get_json();
 
-$user->register();
+$user->check_json();
