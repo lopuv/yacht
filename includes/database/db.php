@@ -13,13 +13,11 @@ class db
     private $jsonstring;
     private $raw_json;
     private $decoded_json;
-    private $user;
 
     //runs every time a new db object is created
     function __construct()
     {
         $this->open_connection();
-        $this->user = new user();
     }
 
     //open the database connection
@@ -87,13 +85,17 @@ class db
             return "jsonstring not found";
         } else {
             $this->decoded_json = json_decode($this->jsonstring, true);
-            $this->user->json = $this->decoded_json;
             return $this->decoded_json;
         }
     }
 
-    public function register()
+    public function process_data()
     {
-        $this->user->register();
+        $json = print_r(file_get_contents('php://input'), true);
+        if($json)
+        {
+            file_put_contents('data.json', $json);
+            $this->get_json();
+        }
     }
 }

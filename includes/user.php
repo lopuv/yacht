@@ -2,7 +2,6 @@
 
 class user
 {
-    private $id;
     private $username;
     private $password;
     public $json;
@@ -10,34 +9,26 @@ class user
     public function register()
     {
         global $db;
-        $this->id = $this->json["id"];
         $this->username = $this->json["username"];
         $this->password = $this->json["password"];
         try {
-            $sql = "SELECT username FROM user WHERE id =". $this->id;
-            echo $sql;
+            $sql = "SELECT username FROM user ";
             $result = $db->conn->prepare($sql);
             $result->execute();
             $data = $result->fetch(PDO::FETCH_ASSOC);
-            if ($data == NULL)
-            {
+            var_dump($data);
+            if ($data['username'] != $this->username) {
                 $sql = "INSERT INTO user (username, password) VALUES (:username, :password)";
                 $result = $db->conn->prepare($sql);
                 $result->bindParam(':username', $this->username);
                 $result->bindParam(':password', $this->password);
                 $result->execute();
                 $db->write_file(json_encode("register succeeded"));
-            }
-            else
-            {
+            } else {
                 echo "this user already exists";
             }
-        } catch (PDOException $error)
-        {
+        } catch (PDOException $error) {
             echo json_encode($error->getMessage());
         }
-
-
-
     }
-}
+    }
